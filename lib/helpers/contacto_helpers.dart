@@ -1,5 +1,4 @@
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
+import 'package:agenda_de_contactos/helpers/imports.dart';
 
 
 final String contactTable = "contactTable";
@@ -21,7 +20,7 @@ class ContactHelper {
 
 
   Future<Database>get db async {
-    if(db != null){
+    if(_db != null){
       return _db;
     }else {
       _db = await initDb();
@@ -31,12 +30,12 @@ class ContactHelper {
 
   Future<Database>initDb () async {
     final databasesPath = await getDatabasesPath();
-    final path = join(databasesPath,"contacts.db");
+    final path = join(databasesPath,"contactsnew.db");
 
     return await openDatabase(path, version: 1, onCreate: (Database db, int newerVersion) async{
       await db.execute(
           "CREATE TABLE $contactTable($idColumn INTEGER PRIMARY KEY, $nameColumn TEXT, $emailColumn TEXT,"
-              "$phoneColumn TEXT, $imgColumn)"
+              "$phoneColumn TEXT, $imgColumn TEXT)"
       );
     });
 
@@ -115,6 +114,8 @@ class Contact {
   String phone;
   String img;
 
+  Contact();
+
   Contact.fromMap(Map map){
 
     id = map[idColumn];
@@ -124,6 +125,7 @@ class Contact {
     img = map[imgColumn];
 
   }
+
 
   Map toMap () {
     Map<String,dynamic> map = {
