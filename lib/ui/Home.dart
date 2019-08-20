@@ -2,14 +2,16 @@ import 'package:agenda_de_contactos/helpers/imports.dart';
 
 
 class HomePage extends StatefulWidget {
+
+
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
 
-
-  ContactHelper helper = ContactHelper();
+  List<Contact>contacts = List();
 
   @override
   void initState() {
@@ -17,23 +19,40 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
 
-    Contact c = new Contact();
 
+    ContactHelper helper = ContactHelper();
+    helper.initDb();
 
-    c.name = "Bruno silva";
-    c.email = "bruno.pfsilva@hotmail.com";
-    c.phone = "915031601";
-    c.img = "img";
+    helper.getAllContcts().then((list){
 
-    helper.saveContact(c);
+      setState(() {
+        contacts = list;
+      });
 
-
-    helper.getAllContcts().then((list){print(list);});
+    });
 
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Contactos"),
+        backgroundColor: Colors.redAccent,
+        centerTitle: true,
+      ),
+      backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton(onPressed: (){ },
+      child: Icon(Icons.add) ,
+        backgroundColor: Colors.redAccent,
+      ),
+      body: ListView.builder(
+          padding: EdgeInsets.all(16.0),
+          itemCount: contacts.length,
+          itemBuilder: (context,index){
+
+          }
+          ),
+    );
   }
 }
