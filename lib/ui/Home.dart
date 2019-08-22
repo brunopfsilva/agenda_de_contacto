@@ -1,6 +1,9 @@
 import 'package:agenda_de_contactos/helpers/imports.dart';
 
-import 'ContactPage.dart';
+
+
+enum OderOptions {oderaz,orderza}
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -120,7 +123,10 @@ class _HomePageState extends State<HomePage> {
                           "Ligar",
                           style: TextStyle(color: Colors.red, fontSize: 20.0),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pop(context);
+                          launch("tel:${contacts[index].phone}");
+                        },
                       ),
                     ),
                     Padding(
@@ -168,6 +174,9 @@ class _HomePageState extends State<HomePage> {
         title: Text("Contactos"),
         backgroundColor: Colors.redAccent,
         centerTitle: true,
+        actions: <Widget>[
+
+        ],
       ),
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(

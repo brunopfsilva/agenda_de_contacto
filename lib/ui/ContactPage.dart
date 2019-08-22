@@ -1,5 +1,6 @@
 import 'package:agenda_de_contactos/helpers/imports.dart';
 
+
 class contactPage extends StatefulWidget {
   final Contact contact;
 
@@ -44,6 +45,7 @@ class _contactPageState extends State<contactPage> {
           title: Text(_editcontact.name ?? "Novo Contacto"),
           centerTitle: true,
           backgroundColor: Colors.red,
+
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
@@ -75,6 +77,12 @@ class _contactPageState extends State<contactPage> {
                     ),
                   ),
                 ),
+                onTap: () => ImagePicker.pickImage(source: ImageSource.camera).then((file){
+                  if(file == null) return;
+                  setState(() {
+                    _editcontact.img = file.path;
+                  });
+                })
               ),
               TextField(
                 decoration: InputDecoration(labelText: "Nome"),
