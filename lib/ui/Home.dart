@@ -1,9 +1,6 @@
 import 'package:agenda_de_contactos/helpers/imports.dart';
 
-
-
-enum OderOptions {oderaz,orderza}
-
+enum OderOptions { oderaz, orderza }
 
 class HomePage extends StatefulWidget {
   @override
@@ -175,7 +172,20 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.redAccent,
         centerTitle: true,
         actions: <Widget>[
-
+          PopupMenuButton<OderOptions>(
+            itemBuilder: (BuildContext context) =>
+                <PopupMenuEntry<OderOptions>>[
+              const PopupMenuItem<OderOptions>(
+                value: OderOptions.oderaz,
+                child: Text('Ordenar A-Z'),
+              ),
+              const PopupMenuItem<OderOptions>(
+                value: OderOptions.orderza,
+                child: Text('Ordenar Z-A'),
+              ),
+            ],
+            onSelected: _orderList,
+          )
         ],
       ),
       backgroundColor: Colors.white,
@@ -193,5 +203,24 @@ class _HomePageState extends State<HomePage> {
             return _cardontact(context, index);
           }),
     );
+  }
+
+  void _orderList(OderOptions value) {
+    switch (value) {
+      case OderOptions.orderza:
+        contacts.sort((a, b) {
+          return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+        });
+        break;
+      case OderOptions.orderza:
+         contacts.sort((a, b) {
+           return  b.name.toLowerCase().compareTo(a.name.toLowerCase());
+        });
+        break;
+
+      default:
+        break;
+    }
+    setState(() {});
   }
 }
