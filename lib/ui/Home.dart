@@ -7,7 +7,6 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 
   ContactHelper helper = ContactHelper();
-
 }
 
 class _HomePageState extends State<HomePage> {
@@ -24,13 +23,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _getAllContacts() {
-
     widget.helper.getAllContcts().then((list) {
       setState(() {
         contacts = list;
       });
     });
-
   }
 
   Widget _cardontact(BuildContext context, int index) {
@@ -83,7 +80,7 @@ class _HomePageState extends State<HomePage> {
       ),
       //Adicionar funcao abaixo do elemento que deseja que seja detectado pelo gesture detector
       onTap: () {
-        _showContactPage(context, contact: contacts[index]);
+        _showOptions(context, index);
       },
     );
   }
@@ -93,15 +90,75 @@ class _HomePageState extends State<HomePage> {
     final contactoRecuperado = await Navigator.push(context,
         MaterialPageRoute(builder: (context) => contactPage(contact: contact)));
     if (contactoRecuperado != null) {
-        if(contact != null){
-          await widget.helper.update(contactoRecuperado);
-        }else {
-          await widget.helper.saveContact(contactoRecuperado);
-        }
+      if (contact != null) {
+        await widget.helper.update(contactoRecuperado);
+      } else {
+        await widget.helper.saveContact(contactoRecuperado);
+      }
 
-        _getAllContacts();
-
+      _getAllContacts();
     }
+  }
+
+  void _showOptions(BuildContext context, int index) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return BottomSheet(
+            onClosing: () {},
+            builder: (context) {
+              return Container(
+                padding: EdgeInsets.all(10.0),
+                child: Column(
+                  //ocupa o menor espaço possivel na coluna principal
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: FlatButton(
+                        child: Text(
+                          "Ligar",
+                          style: TextStyle(color: Colors.red, fontSize: 20.0),
+                        ),
+                        onPressed: () {},
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: FlatButton(
+                        child: Text(
+                          "Editar",
+                          style: TextStyle(color: Colors.red, fontSize: 20.0),
+                        ),
+                        onPressed: () {
+                          // fecha o menu
+                          Navigator.pop(context);
+                          _showContactPage(context, contact: contacts[index]);
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: FlatButton(
+                        child: Text(
+                          "Excluir",
+                          style: TextStyle(color: Colors.red, fontSize: 20.0),
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          setState(() {
+                            widget.helper.deleteContact(contacts[index].id);
+                            contacts.removeAt(index);
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        });
   }
 
   @override
@@ -128,11 +185,4 @@ class _HomePageState extends State<HomePage> {
           }),
     );
   }
-
-
-
-
 }
-
-
-
