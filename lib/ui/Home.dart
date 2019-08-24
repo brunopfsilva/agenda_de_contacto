@@ -6,6 +6,7 @@ class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 
+
   ContactHelper helper = ContactHelper();
 }
 
@@ -19,7 +20,9 @@ class _HomePageState extends State<HomePage> {
     //reinvio
     widget.helper.initDb();
 
-    _getAllContacts();
+    setState(() {
+      _getAllContacts();
+    });
   }
 
   void _getAllContacts() {
@@ -30,6 +33,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+
   Widget _cardontact(BuildContext context, int index) {
     return GestureDetector(
       child: Card(
@@ -38,7 +42,7 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               children: <Widget>[
                 Container(
-                  width: 80,
+                  width:,
                   height: 80,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
@@ -166,6 +170,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var mediaqery = MediaQuery.of(context);
+    var size = mediaqery.size;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Contactos"),
@@ -174,7 +181,7 @@ class _HomePageState extends State<HomePage> {
         actions: <Widget>[
           PopupMenuButton<OderOptions>(
             itemBuilder: (BuildContext context) =>
-                <PopupMenuEntry<OderOptions>>[
+            <PopupMenuEntry<OderOptions>>[
               const PopupMenuItem<OderOptions>(
                 value: OderOptions.oderaz,
                 child: Text('Ordenar A-Z'),
@@ -196,12 +203,15 @@ class _HomePageState extends State<HomePage> {
         child: Icon(Icons.add),
         backgroundColor: Colors.redAccent,
       ),
-      body: ListView.builder(
+      body: Container(
+        width: size.width/2,
+        child: ListView.builder(
           padding: EdgeInsets.all(16.0),
           itemCount: contacts.length,
           itemBuilder: (context, index) {
             return _cardontact(context, index);
-          }),
+          },),
+      ),
     );
   }
 
@@ -213,8 +223,8 @@ class _HomePageState extends State<HomePage> {
         });
         break;
       case OderOptions.orderza:
-         contacts.sort((a, b) {
-           return  b.name.toLowerCase().compareTo(a.name.toLowerCase());
+        contacts.sort((a, b) {
+          return b.name.toLowerCase().compareTo(a.name.toLowerCase());
         });
         break;
 
