@@ -42,11 +42,12 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               children: <Widget>[
                 Container(
-                  width: MediaQuery.of(context).size.width/2,
-                  height: 80,
+                  width: MediaQuery.of(context).size.width/6,
+                  height: MediaQuery.of(context).size.height/9,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
+                      fit: BoxFit.fitHeight,
                       //se tiver imagem pega do ficheiro se nao pega a image padrao
                       image: contacts[index].img != null
                           ? FileImage(File(contacts[index].img))
@@ -63,18 +64,18 @@ class _HomePageState extends State<HomePage> {
                       Text(
                         contacts[index].name ?? "",
                         style: TextStyle(
-                            fontSize: 20.0, fontWeight: FontWeight.bold),
+                            fontSize: 12.0, fontWeight: FontWeight.bold),
                       ),
                       Text(
                         contacts[index].email ?? "",
                         style: TextStyle(
-                          fontSize: 20.0,
+                          fontSize: 12.0,
                         ),
                       ),
                       Text(
                         contacts[index].phone ?? "",
                         style: TextStyle(
-                            fontSize: 20.0, fontWeight: FontWeight.bold),
+                            fontSize: 12.0, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -111,14 +112,15 @@ class _HomePageState extends State<HomePage> {
           return BottomSheet(
             onClosing: () {},
             builder: (context) {
-              return Container(
-                padding: EdgeInsets.all(10.0),
+              return SingleChildScrollView(child:
+              Container(
+                padding: EdgeInsets.all(3.0),
                 child: Column(
                   //ocupa o menor espaço possivel na coluna principal
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.all(10.0),
+                      padding: EdgeInsets.all(3.0),
                       child: FlatButton(
                         child: Text(
                           "Ligar",
@@ -131,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(10.0),
+                      padding: EdgeInsets.all(3.0),
                       child: FlatButton(
                         child: Text(
                           "Editar",
@@ -145,7 +147,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(10.0),
+                      padding: EdgeInsets.all(3.0),
                       child: FlatButton(
                         child: Text(
                           "Excluir",
@@ -162,7 +164,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-              );
+              )
+                ,);
             },
           );
         });
@@ -204,9 +207,8 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.redAccent,
       ),
       body: Container(
-        width: size.width/2,
         child: ListView.builder(
-          padding: EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(8.0),
           itemCount: contacts.length,
           itemBuilder: (context, index) {
             return _cardontact(context, index);
