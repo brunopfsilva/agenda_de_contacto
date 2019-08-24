@@ -123,7 +123,7 @@ class _contactPageState extends State<contactPage> {
   Future<bool> _requestpop() {
     if (_userEdit) {
       showDialog(
-          context: null,
+          context: this.context,
           builder: (context) {
             return AlertDialog(
               title: Text("Descartar alterações?"),
@@ -146,7 +146,7 @@ class _contactPageState extends State<contactPage> {
             );
           });
       //se o usuario modificou algo nao deixa sair da tela
-      return Future.value(true);
+      return Future.value(false);
     } else {
       //deixa sair da tela
       return Future.value(true);
