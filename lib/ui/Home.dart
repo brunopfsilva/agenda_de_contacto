@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               children: <Widget>[
                 Container(
-                  width:,
+                  width: MediaQuery.of(context).size.width/2,
                   height: 80,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
